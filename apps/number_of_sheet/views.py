@@ -27,7 +27,7 @@ def question_image(request):
 
     try:
         deck = scrape_deck(deck_code)
-        question_image = generate_card_list_image(deck.cards, False, settings.TIMES_FONT_PATH)
+        question_image = generate_card_list_image(deck.cards, False, settings.TIMES_BOLD_FONT_PATH)
         response = HttpResponse(content_type="image/png")
         question_image.save(response, format="PNG")
         return response
