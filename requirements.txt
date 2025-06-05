@@ -5,7 +5,7 @@ python-decouple
 django-environ
 gunicorn
 psycopg2-binary
-whitenoises
+whitenoise
 pillow
 requests
 beautifulsoup4
