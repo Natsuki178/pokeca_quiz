@@ -14,9 +14,10 @@ DECK_THUMB = "https://www.pokemon-card.com/deck/deckView.php/deckID/{deck_code}.
 def index(request):
     deck_code = ""
     if request.method == "POST":
-        deck_code = request.POST.get("deck_code", "")
-    elif request.method == "GET":
-        deck_code = _select_random_deckcode()
+        if "fixed" in request.POST:
+            deck_code = request.POST.get("deck_code", "")
+        elif "random" in request.POST:
+            deck_code = _select_random_deckcode()
     return render(request, "number_of_sheet/index.html", {"deck_code": deck_code})
 
 

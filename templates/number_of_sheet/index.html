@@ -71,21 +71,13 @@
         {% csrf_token %}
         <input type="text" name="deck_code" required, value="{{ deck_code }}" placeholder="デッキコードを入力"
             class="full-width-input">
+        <div class="button-wrapper">
+            <!-- 入力ボタン -->
+            <button type="submit" form="input-form" class="action-button" name="fixed">入力</button>
+
+            <button type="submit" class="action-button" name="random"> ランダム入力 </button>
+        </div>
     </form>
-    <div class="button-wrapper">
-        <!-- 入力ボタン -->
-        <button type="submit" form="input-form" class="action-button">
-            入力
-        </button>
-
-        <!-- ランダムボタン -->
-        <form method="get" class="action-form">
-            <button type="submit" class="action-button">
-                ランダム入力
-            </button>
-        </form>
-    </div>
-
 
     {% if deck_code %}
     <div>
