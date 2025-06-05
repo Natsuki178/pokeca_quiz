@@ -1,0 +1,11 @@
+django
+dj-database-url
+dj-static
+python-decouple
+django-environ
+gunicorn
+psycopg2-binary
+whitenoises
+pillow
+requests
+beautifulsoup4
