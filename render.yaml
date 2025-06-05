@@ -18,7 +18,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: pokeca_quiz
+          name: django_render_db
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
