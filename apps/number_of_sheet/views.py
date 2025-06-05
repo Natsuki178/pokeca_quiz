@@ -18,12 +18,15 @@ def question_image(request):
     """
     Returns the question image as a PNG response.
     """
+    print("Generating question image")
     deck_code = request.GET.get("deck_code")
+    print(f"Deck code: {deck_code}")
     if not deck_code:
         return Http404("Deck code is required")
 
     try:
         deck = scrape_deck(deck_code)
+        print(f"Deck scraped: {deck.name} ({deck.code})")
         question_image = generate_card_list_image(deck.cards, with_image=False)
         response = HttpResponse(content_type="image/png")
         question_image.save(response, format="PNG")
