@@ -1,5 +1,6 @@
 import traceback
 
+from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
@@ -26,7 +27,7 @@ def question_image(request):
 
     try:
         deck = scrape_deck(deck_code)
-        question_image = generate_card_list_image(deck.cards, with_image=False)
+        question_image = generate_card_list_image(deck.cards, False, settings.TIMES_FONT_PATH)
         response = HttpResponse(content_type="image/png")
         question_image.save(response, format="PNG")
         return response

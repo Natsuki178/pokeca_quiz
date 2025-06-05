@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import requests
 from PIL import Image, ImageDraw, ImageFont
 
@@ -27,7 +29,7 @@ def calc_row_colmun(kind: int) -> tuple[int, int]:
         return 4, nearrest_multiple(kind, 4, 9)
 
 
-def draw_count(draw: ImageDraw.Draw, count: int) -> None:
+def draw_count(draw: ImageDraw.Draw, count: int, font_path: Path) -> None:
     """
     Draw the count on the image.
 
@@ -39,8 +41,7 @@ def draw_count(draw: ImageDraw.Draw, count: int) -> None:
     imw, imh = draw.im.size
     count_width = int(imw / 4)
     count_height = font_size = int(imh / 8)
-    font = ImageFont.truetype("times.ttf", font_size)  # Load a font
-
+    font = ImageFont.truetype(font_path, font_size)
     count_center = (imw // 2, imh - count_height // 2)
     draw.rectangle(
         (
@@ -85,7 +86,9 @@ def download_image(url: str) -> Image.Image:
     return image
 
 
-def generate_card_image(card: Card, width: int, height: int, with_image: bool) -> Image.Image:
+def generate_card_image(
+    card: Card, width: int, height: int, with_image: bool, font_path: Path
+) -> Image.Image:
     """
     Generate a card image with the specified count, width, and height.
 
@@ -106,7 +109,7 @@ def generate_card_image(card: Card, width: int, height: int, with_image: bool) -
 
     card_image = Image.new("RGB", (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(card_image)
-    draw_count(draw, card.count)
+    draw_count(draw, card.count, font_path)
 
     return card_image
 
@@ -149,7 +152,9 @@ def image_concat_horizontally(image1: Image.Image | None, image2: Image.Image) -
     return new_image
 
 
-def generate_card_list_image(card_list: list[Card], with_image: bool) -> Image.Image:
+def generate_card_list_image(
+    card_list: list[Card], with_image: bool, font_path: Path
+) -> Image.Image:
     """
     Generate a list of card images with the specified count, width, and height.
 
@@ -166,7 +171,7 @@ def generate_card_list_image(card_list: list[Card], with_image: bool) -> Image.I
     card_num = row_count * colmun_count
     for i in range(card_num):
         card = card_list[i] if i < len(card_list) else None
-        card_image = generate_card_image(card, CARD_WIDHTH, CARD_HEIGHT, with_image)
+        card_image = generate_card_image(card, CARD_WIDHTH, CARD_HEIGHT, with_image, font_path)
         card_row_image = image_concat_horizontally(card_row_image, card_image)
 
         if (i + 1) % colmun_count == 0:
