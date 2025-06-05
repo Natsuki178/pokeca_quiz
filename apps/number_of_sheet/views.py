@@ -1,3 +1,4 @@
+import random
 import traceback
 
 from django.conf import settings
@@ -14,6 +15,8 @@ def index(request):
     deck_code = ""
     if request.method == "POST":
         deck_code = request.POST.get("deck_code", "")
+    elif request.method == "GET":
+        deck_code = _select_random_deckcode()
     return render(request, "number_of_sheet/index.html", {"deck_code": deck_code})
 
 
@@ -34,3 +37,11 @@ def question_image(request):
     except Exception as e:
         traceback.print_exc()
         return HttpResponse(str(e), status=400)
+
+
+def _select_random_deckcode() -> str:
+    deck_code_path = settings.DECK_CODE_PATH
+    with open(deck_code_path, "r", encoding="utf-8") as f:
+        deck_codes = f.read().splitlines()
+    deck_code = random.choice(deck_codes).strip()
+    return deck_code
