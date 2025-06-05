@@ -7,18 +7,18 @@ databases:
 
 services:
   - type: web
-    name: django_render
+    name: pokeca_quiz
     env: python
     region: singapore
     buildCommand: './build.sh'
     startCommand: 'gunicorn configs.wsgi:application'
     plan: free
     branch: master
-    healthCheckPath: /
+    healthCheckPath: /number_of_sheet/
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: django_render_db
+          name: pokeca_quiz
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
